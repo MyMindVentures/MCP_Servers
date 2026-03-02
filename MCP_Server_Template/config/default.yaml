@@ -1,0 +1,34 @@
+appName: "mcp-server-template"
+baseUrl: "https://api.example.com"
+toolSource: "curated"
+toolsConfigPath: "./config/tools.curated.json"
+openapiPath: "./config/openapi.example.yaml"
+
+upstreamAuth:
+  type: "bearer"
+  tokenEnv: "UPSTREAM_API_TOKEN"
+
+timeouts:
+  defaultMs: 20000
+
+retries:
+  maxRetries: 2
+  backoffMs: 500
+  retryOnPost: false
+
+circuitBreaker:
+  errorThreshold: 0.5
+  resetMs: 30000
+
+concurrency:
+  globalMaxConcurrent: 32
+
+security:
+  authMode: "api_key"
+  mcpApiKey: "replace-me"
+  allowedUpstreamHosts:
+    - "api.example.com"
+
+observability:
+  logLevel: "info"
+

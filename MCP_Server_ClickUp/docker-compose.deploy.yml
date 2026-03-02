@@ -1,0 +1,17 @@
+# Use this file to run a pre-built image from a registry (e.g. GHCR).
+# Set IMAGE in .env or: IMAGE=ghcr.io/owner/repo:latest docker compose -f docker-compose.deploy.yml up -d
+services:
+  mcp:
+    image: ${IMAGE:?Set IMAGE to your container image (e.g. ghcr.io/owner/repo:latest)}
+    ports:
+      - "${HOST_PORT:-3002}:3001"
+    env_file:
+      - .env
+    environment:
+      - PORT=3001
+      - TOOL_SETTINGS_PATH=/app/data/tool-settings.json
+    volumes:
+      - tool-settings-data:/app/data
+
+volumes:
+  tool-settings-data:

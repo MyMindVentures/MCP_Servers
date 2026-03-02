@@ -1,0 +1,441 @@
+.manual {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #0f0f14;
+  color: #e4e4e7;
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+}
+
+/* Header */
+.manual__header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(15, 15, 20, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+}
+
+.manual__header-inner {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.manual__logo {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #f4f4f5;
+  transition: color 0.15s ease;
+}
+
+.manual__logo:hover {
+  color: #a5b4fc;
+}
+
+.manual__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.manual__user {
+  font-size: 0.875rem;
+  color: #a1a1aa;
+  max-width: 10rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.manual__nav-link {
+  font-size: 0.875rem;
+  color: #a1a1aa;
+  transition: color 0.15s ease;
+}
+
+.manual__nav-link:hover {
+  color: #f4f4f5;
+}
+
+.manual__logout {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #a1a1aa;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.manual__logout:hover {
+  color: #f4f4f5;
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Main */
+.manual__main {
+  flex: 1;
+  padding: 2rem 1.5rem 3rem;
+}
+
+.manual__content {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.manual__section {
+  margin-bottom: 2.5rem;
+}
+
+.manual__hero {
+  margin-bottom: 2rem;
+}
+
+.manual__title {
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #f4f4f5;
+  margin-bottom: 0.5rem;
+}
+
+.manual__description {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: #a1a1aa;
+}
+
+.manual__section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #d4d4d8;
+  margin-bottom: 0.75rem;
+}
+
+.manual__section-intro {
+  font-size: 0.9375rem;
+  color: #a1a1aa;
+  margin-bottom: 1.25rem;
+  line-height: 1.5;
+}
+
+/* Collapsible groups */
+.manual__groups {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.manual__group {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  background: rgba(26, 26, 38, 0.4);
+  overflow: hidden;
+}
+
+.manual__group-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f4f4f5;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.manual__group-header:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.manual__group-chevron {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 2px solid #a5b4fc;
+  border-bottom: 2px solid #a5b4fc;
+  transform: rotate(-45deg);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.manual__group--open .manual__group-chevron {
+  transform: rotate(45deg);
+}
+
+.manual__group-title {
+  flex: 1;
+}
+
+.manual__group-count {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #71717a;
+}
+
+.manual__group-desc {
+  font-size: 0.875rem;
+  color: #a1a1aa;
+  line-height: 1.5;
+  margin: 0 1.25rem 0.75rem;
+  padding-left: 1.5rem;
+}
+
+.manual__group-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.manual__group--open .manual__group-content {
+  max-height: 5000px;
+}
+
+.manual__group-content .manual__tools-grid {
+  padding: 0 1.25rem 1.25rem;
+  padding-left: 2.75rem;
+}
+
+/* URL box */
+.manual__url-section {
+  margin-bottom: 2rem;
+}
+
+.manual__url-box {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1rem 1rem 1.25rem;
+  background: rgba(26, 26, 38, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.manual__url-code {
+  flex: 1;
+  font-size: 0.875rem;
+  font-family: ui-monospace, 'Cascadia Code', 'SF Mono', monospace;
+  color: #e4e4e7;
+  word-break: break-all;
+}
+
+.manual__copy-btn {
+  flex-shrink: 0;
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #a5b4fc;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.manual__copy-btn:hover {
+  background: rgba(99, 102, 241, 0.25);
+  color: #c7d2fe;
+}
+
+/* Tools grid */
+.manual__tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.manual__tool-card {
+  background: rgba(26, 26, 38, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 1.25rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.manual__tool-card:hover {
+  border-color: rgba(99, 102, 241, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.manual__tool-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.manual__tool-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: rgba(99, 102, 241, 0.2);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #a5b4fc;
+}
+
+.manual__tool-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f4f4f5;
+}
+
+.manual__tool-badge {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  margin-left: auto;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.manual__tool-badge--disabled {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+}
+
+.manual__tool-desc {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: #a1a1aa;
+  margin: 0 0 0.5rem;
+}
+
+.manual__tool-id {
+  display: block;
+  font-size: 0.75rem;
+  font-family: ui-monospace, 'Cascadia Code', monospace;
+  color: #71717a;
+  margin-top: 0.25rem;
+}
+
+/* Footer */
+.manual__footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  max-width: 64rem;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.manual__footer-link {
+  font-size: 0.875rem;
+  color: #a1a1aa;
+  transition: color 0.15s ease;
+}
+
+.manual__footer-link:hover {
+  color: #f4f4f5;
+}
+
+.manual__credit {
+  font-size: 0.8125rem;
+  color: #71717a;
+}
+
+/* Loading */
+.manual--loading {
+  align-items: center;
+  justify-content: center;
+}
+
+.manual__loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.manual__spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: manualSpin 0.7s linear infinite;
+}
+
+@keyframes manualSpin {
+  to { transform: rotate(360deg); }
+}
+
+.manual__loading-text {
+  font-size: 0.9375rem;
+  color: #a1a1aa;
+}
+
+/* Error */
+.manual--error {
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.manual__error-card {
+  max-width: 28rem;
+  padding: 2rem;
+  background: rgba(26, 26, 38, 0.9);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: 16px;
+  text-align: center;
+}
+
+.manual__error-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  background: rgba(239, 68, 68, 0.15);
+  border-radius: 50%;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fca5a5;
+  margin-bottom: 1rem;
+}
+
+.manual__error-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #f4f4f5;
+  margin-bottom: 0.5rem;
+}
+
+.manual__error-text {
+  font-size: 0.9375rem;
+  color: #a1a1aa;
+  margin-bottom: 1rem;
+}
+
+.manual__error-link {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #a5b4fc;
+  transition: color 0.15s ease;
+}
+
+.manual__error-link:hover {
+  color: #c7d2fe;
+}

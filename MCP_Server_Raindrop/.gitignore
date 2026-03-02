@@ -1,0 +1,17 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env*
+
+# Optional: persist tool enable/disable (remove from .gitignore to version)
+tool-settings.json
+
+# Auth user store and reset tokens (sensitive)
+data/
+
+# E2E tests
+e2e-temp-data/
+test-results/
+playwright-report/
+playwright/.cache/

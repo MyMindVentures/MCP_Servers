@@ -1,0 +1,23 @@
+{
+  "$schema": "https://example.com/mcp-tools.schema.json",
+  "tools": [
+    {
+      "name": "app.ping",
+      "description": "Simple health check tool that pings the upstream base URL.",
+      "method": "GET",
+      "path": "/ping",
+      "params": {
+        "query": {}
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "policyOverrides": {
+        "timeoutMs": 5000
+      }
+    }
+  ]
+}
+

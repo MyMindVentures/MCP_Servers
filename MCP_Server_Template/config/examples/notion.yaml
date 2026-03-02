@@ -1,0 +1,33 @@
+appName: "notion-mcp"
+baseUrl: "https://api.notion.com"
+toolSource: "curated"
+toolsConfigPath: "./config/examples/notion.tools.json"
+
+upstreamAuth:
+  type: "bearer"
+  tokenEnv: "NOTION_API_TOKEN"
+
+timeouts:
+  defaultMs: 20000
+
+retries:
+  maxRetries: 2
+  backoffMs: 500
+  retryOnPost: false
+
+circuitBreaker:
+  errorThreshold: 0.5
+  resetMs: 30000
+
+concurrency:
+  globalMaxConcurrent: 32
+
+security:
+  authMode: "api_key"
+  mcpApiKey: "replace-me"
+  allowedUpstreamHosts:
+    - "api.notion.com"
+
+observability:
+  logLevel: "info"
+

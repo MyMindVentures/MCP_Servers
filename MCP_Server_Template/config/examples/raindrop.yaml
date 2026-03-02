@@ -1,0 +1,33 @@
+appName: "raindrop-mcp"
+baseUrl: "https://api.raindrop.io"
+toolSource: "curated"
+toolsConfigPath: "./config/examples/raindrop.tools.json"
+
+upstreamAuth:
+  type: "bearer"
+  tokenEnv: "RAINDROP_API_TOKEN"
+
+timeouts:
+  defaultMs: 20000
+
+retries:
+  maxRetries: 2
+  backoffMs: 500
+  retryOnPost: false
+
+circuitBreaker:
+  errorThreshold: 0.5
+  resetMs: 30000
+
+concurrency:
+  globalMaxConcurrent: 32
+
+security:
+  authMode: "api_key"
+  mcpApiKey: "replace-me"
+  allowedUpstreamHosts:
+    - "api.raindrop.io"
+
+observability:
+  logLevel: "info"
+

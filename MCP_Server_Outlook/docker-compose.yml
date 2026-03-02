@@ -1,0 +1,29 @@
+# Set IMAGE to your registry URL (e.g. ghcr.io/owner/repo:latest) to use a published image.
+# Leave unset to build from Dockerfile and tag as mcp-server-airtable:local.
+services:
+  mcp:
+    image: ${IMAGE:-mcp-server-airtable:local}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - IMAGE_VERSION=${IMAGE_VERSION:-dev}
+        - IMAGE_SOURCE=${IMAGE_SOURCE:-}
+        - IMAGE_REVISION=${IMAGE_REVISION:-}
+    # Omit "image" when building only; when deploying from registry set IMAGE
+    # so the same compose file works for both local dev and cloud deploy.
+    ports:
+      - "${HOST_PORT:-3002}:3001"
+    env_file:
+      - .env
+    environment:
+      - PORT=3001
+      - TOOL_SETTINGS_PATH=/app/data/tool-settings.json
+    volumes:
+      - tool-settings-data:/app/data
+    # Optional: mount custom .env for secrets on the server
+    # env_file:
+    #   - /etc/mcp/.env
+
+volumes:
+  tool-settings-data:

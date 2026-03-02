@@ -1,0 +1,37 @@
+/**
+ * Tool definitions for the GitHub MCP server.
+ * Base https://api.github.com, Bearer GITHUB_TOKEN, Accept: application/vnd.github.v3+json
+ */
+export const toolPaths = [
+  'github-api/meta.js',
+  'github-api/rate_limit.js',
+  'github-api/user.js',
+  'github-api/user_get.js',
+  'github-api/repos_list.js',
+  'github-api/repos_get.js',
+  'github-api/repos_create.js',
+  'github-api/repos_update.js',
+  'github-api/repos_delete.js',
+  'github-api/branches_list.js',
+  'github-api/issues_list.js',
+  'github-api/issues_get.js',
+  'github-api/issues_create.js',
+  'github-api/issues_update.js',
+  'github-api/issues_comments_list.js',
+  'github-api/issues_comments_create.js',
+  'github-api/pulls_list.js',
+  'github-api/pulls_get.js',
+  'github-api/pulls_create.js',
+  'github-api/pulls_update.js',
+  'github-api/pulls_reviews_list.js',
+  'github-api/pulls_reviews_create.js',
+  'github-api/search_repos.js',
+  'github-api/search_issues.js',
+  'github-api/search_code.js',
+  'github-api/commits_list.js',
+  'github-api/commits_get.js',
+  'github-api/contents_get.js',
+  'github-api/contents_create.js',
+  'github-api/contents_update.js',
+  'github-api/contents_delete.js',
+];

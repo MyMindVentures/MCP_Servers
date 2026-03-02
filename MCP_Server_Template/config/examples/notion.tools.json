@@ -1,0 +1,53 @@
+{
+  "tools": [
+    {
+      "name": "notion.search_pages",
+      "description": "Search Notion pages with a query string.",
+      "method": "POST",
+      "path": "/v1/search",
+      "params": {
+        "body": {
+          "query": "search string"
+        }
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          }
+        },
+        "required": ["query"],
+        "additionalProperties": false
+      },
+      "policyOverrides": {
+        "timeoutMs": 20000
+      }
+    },
+    {
+      "name": "notion.retrieve_page",
+      "description": "Retrieve a Notion page by ID.",
+      "method": "GET",
+      "path": "/v1/pages/{pageId}",
+      "params": {
+        "path": {
+          "pageId": "ID of the page"
+        }
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "pageId": {
+            "type": "string"
+          }
+        },
+        "required": ["pageId"],
+        "additionalProperties": false
+      },
+      "policyOverrides": {
+        "timeoutMs": 15000
+      }
+    }
+  ]
+}
+

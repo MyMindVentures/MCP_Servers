@@ -1,0 +1,15 @@
+{
+  "name": "mcp-servers-monorepo",
+  "private": true,
+  "workspaces": [
+    "MCP_Server_*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0"
+  }
+}

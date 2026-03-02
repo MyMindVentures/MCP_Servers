@@ -1,0 +1,11 @@
+# Dependencies; we install inside the image
+node_modules
+ui/node_modules
+# Avoid copying a stale host build; we build ui in Docker
+ui/dist
+.git
+.env
+.env*
+!.env.example
+.env.local
+*.log

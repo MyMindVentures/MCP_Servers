@@ -1,0 +1,299 @@
+/* Enterprise landing — DM Sans base */
+.landing {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: #e4e4e7;
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+}
+
+/* Header */
+.landing__header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(15, 15, 20, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+}
+
+.landing__header-inner {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.landing__logo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #f4f4f5;
+  transition: color 0.15s ease;
+}
+
+.landing__logo:hover {
+  color: #a5b4fc;
+}
+
+.landing__nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.landing__nav-link {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #a1a1aa;
+  transition: color 0.15s ease;
+}
+
+.landing__nav-link:hover {
+  color: #f4f4f5;
+}
+
+.landing__nav-link--cta {
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: #fff;
+  border-radius: 8px;
+}
+
+.landing__nav-link--cta:hover {
+  color: #fff;
+  opacity: 0.95;
+}
+
+/* Hero */
+.landing__main {
+  flex: 1;
+  position: relative;
+}
+
+.landing__hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 90% 60% at 50% -10%, rgba(99, 102, 241, 0.14), transparent 50%),
+    radial-gradient(ellipse 70% 50% at 100% 30%, rgba(15, 52, 96, 0.25), transparent),
+    radial-gradient(ellipse 50% 40% at 0% 60%, rgba(30, 27, 75, 0.2), transparent),
+    linear-gradient(180deg, #0f0f14 0%, #13131a 35%, #1a1a2e 100%);
+  z-index: 0;
+}
+
+.landing__hero-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 50% at 50% 30%, black 20%, transparent 70%);
+  z-index: 0;
+}
+
+.landing__hero {
+  position: relative;
+  z-index: 1;
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 5rem;
+  text-align: center;
+}
+
+.landing__badge {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  background: rgba(99, 102, 241, 0.2);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #a5b4fc;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.landing__title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+  color: #f4f4f5;
+}
+
+.landing__tagline {
+  font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+  color: #a1a1aa;
+  margin-bottom: 1rem;
+}
+
+.landing__description {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #d4d4d8;
+  margin-bottom: 2rem;
+  max-width: 36rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.landing__cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.landing__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  transition: transform 0.1s ease, box-shadow 0.2s ease, opacity 0.15s ease;
+}
+
+.landing__cta--primary {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+}
+
+.landing__cta--primary:hover {
+  opacity: 0.95;
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
+  transform: translateY(-1px);
+}
+
+.landing__cta--secondary {
+  background: rgba(255, 255, 255, 0.06);
+  color: #e4e4e7;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.landing__cta--secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+/* Features */
+.landing__features {
+  position: relative;
+  z-index: 1;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+}
+
+.landing__features-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #f4f4f5;
+}
+
+.landing__features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.feature-card {
+  background: rgba(26, 26, 38, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-card:hover {
+  border-color: rgba(99, 102, 241, 0.25);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.feature-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: rgba(99, 102, 241, 0.2);
+  border-radius: 10px;
+  font-size: 1.25rem;
+  color: #a5b4fc;
+  margin-bottom: 1rem;
+}
+
+.feature-card__title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: #f4f4f5;
+  margin-bottom: 0.5rem;
+}
+
+.feature-card__description {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #a1a1aa;
+}
+
+/* Bottom CTA */
+.landing__bottom-cta {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 3rem 1.5rem 4rem;
+}
+
+.landing__bottom-cta-text {
+  font-size: 1.125rem;
+  color: #d4d4d8;
+  margin-bottom: 1rem;
+}
+
+/* Footer */
+.landing__footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(15, 15, 20, 0.5);
+}
+
+.landing__footer-inner {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.landing__credit {
+  font-size: 0.875rem;
+  color: #71717a;
+}
+
+.landing__footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.landing__footer-link {
+  font-size: 0.875rem;
+  color: #a1a1aa;
+  transition: color 0.15s ease;
+}
+
+.landing__footer-link:hover {
+  color: #f4f4f5;
+}

@@ -1,0 +1,19 @@
+# 1Password Connect API – expected endpoints
+# One id per line; used by scripts/check-api-coverage.js to flag missing tools.
+# Source: https://developer.1password.com/docs/connect/api-reference/
+
+list_vaults
+get_vault
+list_items
+get_item
+create_item
+replace_item
+update_item
+delete_item
+list_files
+get_file
+get_file_content
+list_activity
+heartbeat
+health
+# metrics

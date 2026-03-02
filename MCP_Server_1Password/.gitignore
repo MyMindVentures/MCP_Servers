@@ -1,0 +1,51 @@
+node_modules
+dist
+build
+coverage
+.nyc_output
+.cache
+
+# Env and secrets
+.env
+.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode
+.idea
+
+# Playwright / test artifacts
+test-results
+playwright-report
+.playwright
+
+# Misc
+*.log
+# Node modules
+node_modules/
+
+# Environment variables
+.env*
+
+# Optional: persist tool enable/disable (remove from .gitignore to version)
+tool-settings.json
+
+# Auth user store and reset tokens (sensitive)
+data/
+
+# E2E tests
+e2e-temp-data/
+test-results/
+playwright-report/
+playwright/.cache/

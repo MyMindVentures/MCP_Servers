@@ -1,0 +1,52 @@
+{
+  "tools": [
+    {
+      "name": "raindrop.list_collections",
+      "description": "List Raindrop collections for the authenticated user.",
+      "method": "GET",
+      "path": "/rest/v1/collections",
+      "params": {
+        "query": {}
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "policyOverrides": {
+        "timeoutMs": 10000
+      }
+    },
+    {
+      "name": "raindrop.search_bookmarks",
+      "description": "Search Raindrop bookmarks by collection and search query.",
+      "method": "GET",
+      "path": "/rest/v1/raindrops/{collectionId}",
+      "params": {
+        "path": {
+          "collectionId": "collection id"
+        },
+        "query": {
+          "search": "search query"
+        }
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "collectionId": {
+            "type": "integer"
+          },
+          "search": {
+            "type": "string"
+          }
+        },
+        "required": ["collectionId"],
+        "additionalProperties": false
+      },
+      "policyOverrides": {
+        "timeoutMs": 15000
+      }
+    }
+  ]
+}
+
