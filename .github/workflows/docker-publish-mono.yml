@@ -1,8 +1,7 @@
-# Build and push all three MCP server images (Notion, Outlook, Raindrop) to Docker Hub.
-# Each server is built from its own directory and pushed as a separate image.
-#
-# Secrets: DOCKERHUB_USERNAME, DOCKERHUB_TOKEN (Docker Hub).
-# For GHCR: use separate GitHub repos per server, each with its own docker-publish.yml in the server folder.
+# Build and push all MCP server images to GitHub Container Registry (ghcr.io).
+# Each server is built from its own directory and pushed as a separate image
+# with both :latest and :<version> tags, where <version> comes from the
+# server's package.json.
 
 name: Docker build and push (monorepo)
 
@@ -19,10 +18,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        server: [notion, outlook, raindrop, clickup, gammaai, 1password, github]
+        server: [notion, outlook, raindrop, clickup, gammaai, 1password, github, airtable, airtable-lite, template]
 
     permissions:
       contents: read
+      packages: write
 
     steps:
       - name: Checkout
@@ -39,6 +39,9 @@ jobs:
             gammaai)  DIR="MCP_Server_GammaAI" ;;
             1password) DIR="MCP_Server_1Password" ;;
             github)   DIR="MCP_Server_GitHub" ;;
+            airtable) DIR="MCP_Server_Airtable" ;;
+            airtable-lite) DIR="MCP_Server_Template_Lightweight_AirtableExample" ;;
+            template) DIR="MCP_Server_Template" ;;
             *) echo "Unknown server"; exit 1 ;;
           esac
           echo "directory=${DIR}" >> $GITHUB_OUTPUT
@@ -49,23 +52,24 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Log in to Docker Hub
+      - name: Log in to GitHub Container Registry
         if: github.event_name != 'pull_request'
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push to Docker Hub
+      - name: Build and push to GHCR
         uses: docker/build-push-action@v6
         with:
           context: ${{ steps.meta.outputs.directory }}
           file: ${{ steps.meta.outputs.directory }}/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/mcp-server-${{ matrix.server }}:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/mcp-server-${{ matrix.server }}:${{ steps.meta.outputs.version }}
-            ${{ secrets.DOCKERHUB_USERNAME }}/mcp-server-${{ matrix.server }}:sha-${{ github.sha }}
+            ghcr.io/${{ github.repository_owner }}/mcp-server-${{ matrix.server }}:latest
+            ghcr.io/${{ github.repository_owner }}/mcp-server-${{ matrix.server }}:${{ steps.meta.outputs.version }}
+            ghcr.io/${{ github.repository_owner }}/mcp-server-${{ matrix.server }}:sha-${{ github.sha }}
           build-args: |
             IMAGE_VERSION=${{ steps.meta.outputs.version }}
             IMAGE_SOURCE=https://github.com/${{ github.repository }}
