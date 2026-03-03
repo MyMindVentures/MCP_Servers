@@ -161,6 +161,62 @@ export default function ManualInfo() {
           </section>
 
           <section className="manual__section">
+            <h2 className="manual__section-title">How to connect MCP clients</h2>
+            <p className="manual__section-intro">
+              Use this server from different MCP-compatible clients. The examples below assume this server is reachable at the public URL shown above.
+            </p>
+            <div className="manual__connection-grid">
+              <article className="manual__connection-card">
+                <h3 className="manual__connection-title">ChatGPT (SSE)</h3>
+                <p className="manual__connection-text">
+                  Run the server in SSE mode:
+                </p>
+                <pre className="manual__code-block">
+{`node mcpServer.js --sse`}
+                </pre>
+                <p className="manual__connection-text">
+                  Then in ChatGPT&apos;s &quot;URL van MCP server&quot; field, use:
+                </p>
+                <pre className="manual__code-block">
+{meta.publicUrl.replace(/\/mcp$/, '/sse')}
+                </pre>
+                <p className="manual__connection-note">
+                  The SSE endpoint is always the same host as the public URL, but with <code>/sse</code> instead of <code>/mcp</code>.
+                </p>
+              </article>
+
+              <article className="manual__connection-card">
+                <h3 className="manual__connection-title">HTTP-based MCP clients</h3>
+                <p className="manual__connection-text">
+                  Run the server in Streamable HTTP mode:
+                </p>
+                <pre className="manual__code-block">
+{`node mcpServer.js --streamable-http`}
+                </pre>
+                <p className="manual__connection-text">
+                  Configure your MCP client to send JSON-RPC 2.0 POST requests to:
+                </p>
+                <pre className="manual__code-block">
+{meta.publicUrl}
+                </pre>
+              </article>
+
+              <article className="manual__connection-card">
+                <h3 className="manual__connection-title">Stdio (Claude Desktop / Cursor)</h3>
+                <p className="manual__connection-text">
+                  Run the server without flags to use stdio:
+                </p>
+                <pre className="manual__code-block">
+{`node mcpServer.js`}
+                </pre>
+                <p className="manual__connection-text">
+                  Then point your MCP client to the <code>node</code> binary with <code>mcpServer.js</code> as the argument.
+                </p>
+              </article>
+            </div>
+          </section>
+
+          <section className="manual__section">
             <h2 className="manual__section-title">Beschikbare tools ({meta.tools.length})</h2>
             <p className="manual__section-intro">Tools zijn gegroepeerd per onderdeel van de Airtable API. Klik op een groep om de tools te tonen of te verbergen.</p>
             {meta.toolGroups?.length > 0 ? (
