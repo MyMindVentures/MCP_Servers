@@ -1,18 +1,21 @@
 # MCP Servers Monorepo
 
-This repository contains **seven** **MCP (Model Context Protocol) servers**, each exposing the official API of a platform as tools for MCP-compatible clients (e.g. Claude Desktop, Cursor):
+This repository contains multiple **MCP (Model Context Protocol) servers**, each exposing the official API of a platform as tools for MCP-compatible clients (e.g. Claude Desktop, Cursor):
 
-| Server | Directory | API | Image (Docker Hub) |
-|--------|-----------|-----|--------------------|
-| **Notion** | [MCP_Server_Notion](MCP_Server_Notion) | [Notion API](https://developers.notion.com/reference) | `DOCKERHUB_USER/mcp-server-notion` |
-| **Outlook** | [MCP_Server_Outlook](MCP_Server_Outlook) | [Microsoft Graph](https://learn.microsoft.com/en-us/graph/api/overview) (mail, calendar, contacts) | `DOCKERHUB_USER/mcp-server-outlook` |
-| **Raindrop** | [MCP_Server_Raindrop](MCP_Server_Raindrop) | [Raindrop.io API](https://developer.raindrop.io/) | `DOCKERHUB_USER/mcp-server-raindrop` |
-| **ClickUp** | [MCP_Server_ClickUp](MCP_Server_ClickUp) | [ClickUp API v2](https://developer.clickup.com/) | `DOCKERHUB_USER/mcp-server-clickup` |
-| **Gamma AI** | [MCP_Server_GammaAI](MCP_Server_GammaAI) | [Gamma API](https://developers.gamma.app/) | `DOCKERHUB_USER/mcp-server-gammaai` |
-| **1Password** | [MCP_Server_1Password](MCP_Server_1Password) | [1Password Connect API](https://developer.1password.com/docs/connect/api-reference/) | `DOCKERHUB_USER/mcp-server-1password` |
-| **GitHub** | [MCP_Server_GitHub](MCP_Server_GitHub) | [GitHub REST API](https://docs.github.com/en/rest) | `DOCKERHUB_USER/mcp-server-github` |
+| Server | Directory | API | Image (GHCR) |
+|--------|-----------|-----|--------------|
+| **Notion** | [MCP_Server_Notion](MCP_Server_Notion) | [Notion API](https://developers.notion.com/reference) | `ghcr.io/MyMindVentures/mcp-server-notion` |
+| **Outlook** | [MCP_Server_Outlook](MCP_Server_Outlook) | [Microsoft Graph](https://learn.microsoft.com/en-us/graph/api/overview) (mail, calendar, contacts) | `ghcr.io/MyMindVentures/mcp-server-outlook` |
+| **Raindrop** | [MCP_Server_Raindrop](MCP_Server_Raindrop) | [Raindrop.io API](https://developer.raindrop.io/) | `ghcr.io/MyMindVentures/mcp-server-raindrop` |
+| **ClickUp** | [MCP_Server_ClickUp](MCP_Server_ClickUp) | [ClickUp API v2](https://developer.clickup.com/) | `ghcr.io/MyMindVentures/mcp-server-clickup` |
+| **Gamma AI** | [MCP_Server_GammaAI](MCP_Server_GammaAI) | [Gamma API](https://developers.gamma.app/) | `ghcr.io/MyMindVentures/mcp-server-gammaai` |
+| **1Password** | [MCP_Server_1Password](MCP_Server_1Password) | [1Password Connect API](https://developer.1password.com/docs/connect/api-reference/) | `ghcr.io/MyMindVentures/mcp-server-1password` |
+| **GitHub** | [MCP_Server_GitHub](MCP_Server_GitHub) | [GitHub REST API](https://docs.github.com/en/rest) | `ghcr.io/MyMindVentures/mcp-server-github` |
+| **Airtable** | [MCP_Server_Airtable](MCP_Server_Airtable) | Airtable Web API | `ghcr.io/MyMindVentures/mcp-server-airtable` |
+| **Airtable (Lite Template)** | [MCP_Server_Template_Lightweight_AirtableExample](MCP_Server_Template_Lightweight_AirtableExample) | Airtable Web API (lightweight template) | `ghcr.io/MyMindVentures/mcp-server-airtable-lite` |
+| **Template (TypeScript)** | [MCP_Server_Template](MCP_Server_Template) | Generic TypeScript MCP server template | `ghcr.io/MyMindVentures/mcp-server-template` |
 
-Each server is built from the same lightweight template (Postman-runtime–based) and can be run locally or deployed by **image tag** from Docker Hub or GitHub Container Registry.
+Each server can be run locally or deployed by **image tag** from GitHub Container Registry.
 
 ## Quick start (local)
 
@@ -48,15 +51,18 @@ npm start
 
 ## Deploy by image tag (cloud)
 
-After pushing the repo to GitHub and configuring secrets, the **Docker build and push (monorepo)** workflow builds and publishes **seven** images to **Docker Hub**:
+After pushing the repo to GitHub, the **Docker build and push (monorepo)** workflow builds and publishes images to **GitHub Container Registry (GHCR)**:
 
-- `DOCKERHUB_USERNAME/mcp-server-notion:latest` (and `:1.0.0`, `:sha-<sha>`)
-- `DOCKERHUB_USERNAME/mcp-server-outlook:latest`
-- `DOCKERHUB_USERNAME/mcp-server-raindrop:latest`
-- `DOCKERHUB_USERNAME/mcp-server-clickup:latest`
-- `DOCKERHUB_USERNAME/mcp-server-gammaai:latest`
-- `DOCKERHUB_USERNAME/mcp-server-1password:latest`
-- `DOCKERHUB_USERNAME/mcp-server-github:latest`
+- `ghcr.io/MyMindVentures/mcp-server-notion:latest` (and `:<version>`, `:sha-<sha>`)
+- `ghcr.io/MyMindVentures/mcp-server-outlook:latest`
+- `ghcr.io/MyMindVentures/mcp-server-raindrop:latest`
+- `ghcr.io/MyMindVentures/mcp-server-clickup:latest`
+- `ghcr.io/MyMindVentures/mcp-server-gammaai:latest`
+- `ghcr.io/MyMindVentures/mcp-server-1password:latest`
+- `ghcr.io/MyMindVentures/mcp-server-github:latest`
+- `ghcr.io/MyMindVentures/mcp-server-airtable:latest`
+- `ghcr.io/MyMindVentures/mcp-server-airtable-lite:latest`
+- `ghcr.io/MyMindVentures/mcp-server-template:latest`
 
 On a cloud server:
 
@@ -65,18 +71,18 @@ On a cloud server:
 3. Run:
 
    ```bash
-   export IMAGE=DOCKERHUB_USERNAME/mcp-server-notion:latest   # or outlook, raindrop, clickup, gammaai, 1password, github
+   export IMAGE=ghcr.io/MyMindVentures/mcp-server-notion:latest   # or outlook, raindrop, clickup, gammaai, 1password, github, airtable, airtable-lite, template
    docker compose -f docker-compose.deploy.yml pull
    docker compose -f docker-compose.deploy.yml up -d
    ```
 
-**Required secrets (GitHub repo):**
+**GitHub Actions & GHCR:**
 
-- `DOCKERHUB_USERNAME` – Docker Hub username
-- `DOCKERHUB_TOKEN` – Docker Hub access token (Settings → Security → Access tokens)
-
-**GitHub Container Registry (GHCR):**  
-For one image per server on GHCR, use one GitHub repository per server (e.g. `mcp-server-notion`) and copy the per-server `.github/workflows/docker-publish.yml` from the template into each repo. This monorepo workflow only pushes to Docker Hub.
+- This monorepo uses a single workflow at `.github/workflows/docker-publish-mono.yml` that:
+  - Runs on pushes to the main branch.
+  - Reads each server’s `package.json` `version` field.
+  - Builds one image per server with tags `:latest`, `:<version>`, and `:sha-<sha>`.
+- The workflow authenticates to GHCR using the built-in `GITHUB_TOKEN`; no extra secrets are required beyond enabling “Read and write permissions” for Actions in the repo settings.
 
 ## Repository layout
 
@@ -88,6 +94,6 @@ For one image per server on GHCR, use one GitHub repository per server (e.g. `mc
 - `MCP_Server_1Password/` – 1Password Connect (vaults, items, files, activity)
 - `MCP_Server_GitHub/` – GitHub REST API (repos, issues, pulls, search, commits, contents)
 - `MCP_Server_Template_Lightweight_AirtableExample/` – Template (Airtable) used as base
-- `.github/workflows/docker-publish-mono.yml` – CI: build and push all seven images to Docker Hub
+- `.github/workflows/docker-publish-mono.yml` – CI: build and push all server images to GitHub Container Registry
 
 Each server has its own `README.md` and `DEPLOY.md` for setup and deployment details.
