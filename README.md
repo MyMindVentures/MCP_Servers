@@ -14,6 +14,7 @@ This repository contains multiple **MCP (Model Context Protocol) servers**, each
 | **Airtable** | [MCP_Server_Airtable](MCP_Server_Airtable) | Airtable Web API | `ghcr.io/MyMindVentures/mcp-server-airtable` |
 | **Airtable (Lite Template)** | [MCP_Server_Template_Lightweight_AirtableExample](MCP_Server_Template_Lightweight_AirtableExample) | Airtable Web API (lightweight template) | `ghcr.io/MyMindVentures/mcp-server-airtable-lite` |
 | **Template (TypeScript)** | [MCP_Server_Template](MCP_Server_Template) | Generic TypeScript MCP server template | `ghcr.io/MyMindVentures/mcp-server-template` |
+| **Spotify** | [MCP_Server_Spotify](MCP_Server_Spotify) | [Spotify Web API](https://developer.spotify.com/documentation/web-api) | _local only (no image yet)_ |
 
 Each server can be run locally or deployed by **image tag** from GitHub Container Registry.
 
@@ -94,6 +95,7 @@ On a cloud server:
 - `MCP_Server_1Password/` – 1Password Connect (vaults, items, files, activity)
 - `MCP_Server_GitHub/` – GitHub REST API (repos, issues, pulls, search, commits, contents)
 - `MCP_Server_Template_Lightweight_AirtableExample/` – Template (Airtable) used as base
+ - `MCP_Server_Spotify/` – Spotify Web API (search, playback control, playlists)
 - `.github/workflows/docker-publish-mono.yml` – CI: build and push all server images to GitHub Container Registry
 
 Each server has its own `README.md` and `DEPLOY.md` for setup and deployment details.
