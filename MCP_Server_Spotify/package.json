@@ -1,0 +1,24 @@
+{
+  "name": "mcp-server-spotify",
+  "version": "1.0.0",
+  "description": "MCP server exposing Spotify Web API for search, playback control, and playlists",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "list-tools": "node index.js tools",
+    "start": "node mcpServer.js --streamable-http"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.0",
+    "bcryptjs": "^2.4.3",
+    "commander": "^13.1.0",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "Postman, Inc.",
+  "license": "MIT"
+}
