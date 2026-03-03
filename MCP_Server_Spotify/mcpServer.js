@@ -37,25 +37,6 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: path.resolve(__dirname, ".env") });
 
-// #region agent log
-fetch('http://127.0.0.1:7750/ingest/6d15222b-c917-4ab8-8f64-fea449f8d396', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'X-Debug-Session-Id': '872410',
-  },
-  body: JSON.stringify({
-    sessionId: '872410',
-    runId: 'pre-fix',
-    hypothesisId: 'H1',
-    location: 'mcpServer.js:36',
-    message: 'mcpServer module loaded',
-    data: {},
-    timestamp: Date.now(),
-  }),
-}).catch(() => {});
-// #endregion agent log
-
 const UI_DIST = path.join(__dirname, "ui", "dist");
 
 const SERVER_NAME = "generated-mcp-server";
@@ -363,88 +344,10 @@ async function run() {
   const isStreamableHttp = args.includes("--streamable-http");
   const isSSE = args.includes("--sse");
 
-  // #region agent log
-  fetch('http://127.0.0.1:7750/ingest/6d15222b-c917-4ab8-8f64-fea449f8d396', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Debug-Session-Id': '872410',
-    },
-    body: JSON.stringify({
-      sessionId: '872410',
-      runId: 'pre-fix',
-      hypothesisId: 'H2',
-      location: 'mcpServer.js:283',
-      message: 'run() starting',
-      data: { args, isStreamableHttp, isSSE },
-      timestamp: Date.now(),
-    }),
-  }).catch(() => {});
-  // #endregion agent log
-
   let tools;
   try {
-    // #region agent log
-    fetch('http://127.0.0.1:7750/ingest/6d15222b-c917-4ab8-8f64-fea449f8d396', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Debug-Session-Id': '872410',
-      },
-      body: JSON.stringify({
-        sessionId: '872410',
-        runId: 'pre-fix',
-        hypothesisId: 'H3',
-        location: 'mcpServer.js:292',
-        message: 'discoverTools() about to run',
-        data: {},
-        timestamp: Date.now(),
-      }),
-    }).catch(() => {});
-    // #endregion agent log
-
     tools = await discoverTools();
-
-    // #region agent log
-    fetch('http://127.0.0.1:7750/ingest/6d15222b-c917-4ab8-8f64-fea449f8d396', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Debug-Session-Id': '872410',
-      },
-      body: JSON.stringify({
-        sessionId: '872410',
-        runId: 'pre-fix',
-        hypothesisId: 'H3',
-        location: 'mcpServer.js:301',
-        message: 'discoverTools() succeeded',
-        data: { toolCount: Array.isArray(tools) ? tools.length : null },
-        timestamp: Date.now(),
-      }),
-    }).catch(() => {});
-    // #endregion agent log
   } catch (error) {
-    // #region agent log
-    fetch('http://127.0.0.1:7750/ingest/6d15222b-c917-4ab8-8f64-fea449f8d396', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Debug-Session-Id': '872410',
-      },
-      body: JSON.stringify({
-        sessionId: '872410',
-        runId: 'pre-fix',
-        hypothesisId: 'H1',
-        location: 'mcpServer.js:309',
-        message: 'discoverTools() failed',
-        data: {
-          errorName: error && error.name,
-          errorMessage: error && error.message,
-        },
-        timestamp: Date.now(),
-      }),
-    }).catch(() => {});
-    // #endregion agent log
     throw error;
   }
 
