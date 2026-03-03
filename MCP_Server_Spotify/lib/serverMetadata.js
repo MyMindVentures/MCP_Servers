@@ -1,4 +1,5 @@
 import { getToolLabel, TOOL_GROUP_ORDER, TOOL_GROUP_LABELS } from "./toolGroups.js";
+import * as transportSettings from "./transportSettings.js";
 
 const PLATFORM_NAME = "MCP Server — Spotify";
 const PLATFORM_DESCRIPTION =
@@ -7,6 +8,9 @@ const PLATFORM_DESCRIPTION =
 export function getServerMetadata(tools, publicUrl, enabledToolNames) {
   const baseUrl =
     publicUrl || process.env.MCP_PUBLIC_URL || "http://127.0.0.1:3001/mcp";
+  const transportMode = transportSettings.getTransportMode();
+  const availableTransports = transportSettings.getAvailableModes();
+
   const toolList = (tools || [])
     .map((tool) => {
       const fn = tool.definition?.function;
@@ -45,6 +49,8 @@ export function getServerMetadata(tools, publicUrl, enabledToolNames) {
     name: PLATFORM_NAME,
     description: PLATFORM_DESCRIPTION,
     publicUrl: baseUrl,
+    transportMode,
+    availableTransports,
     toolGroups,
     tools: toolList,
   };
