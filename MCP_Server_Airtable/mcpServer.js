@@ -18,6 +18,7 @@ import * as toolSettings from "./lib/toolSettings.js";
 import * as authStore from "./lib/authStore.js";
 import * as auth from "./lib/auth.js";
 import { jwtAuthMiddleware, registerAuthRoutes } from "./lib/authRoutes.js";
+import * as transportSettings from "./lib/transportSettings.js";
 
 import path from "path";
 import { existsSync } from "fs";
@@ -185,6 +186,46 @@ async function setupStreamableHttp(toolsRef) {
     res.json(getServerMetadata(toolsRef.current, undefined, getEnabledSet()));
   });
 
+  app.get("/api/settings/transport", (_req, res) => {
+    res.json({
+      mode: transportSettings.getTransportMode(),
+      availableModes: transportSettings.getAvailableModes(),
+    });
+  });
+
+  app.patch("/api/settings/transport", (req, res) => {
+    const mode = req.body?.mode;
+    const availableModes = transportSettings.getAvailableModes();
+    if (typeof mode !== "string" || !availableModes.includes(mode)) {
+      return res.status(400).json({
+        error: "Invalid or missing 'mode'.",
+        availableModes,
+      });
+    }
+    try {
+      transportSettings.setTransportMode(mode);
+      return res.json({
+        mode: transportSettings.getTransportMode(),
+        availableModes,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        error: err && err.message ? err.message : "Failed to update transport mode",
+      });
+    }
+  });
+
+  app.post("/api/settings/transport/apply", (_req, res) => {
+    const mode = transportSettings.getTransportMode();
+    res.json({
+      status: "restarting",
+      mode,
+    });
+    setTimeout(() => {
+      process.exit(0);
+    }, 100);
+  });
+
   app.patch("/api/settings/tools", (req, res) => {
     const allToolNames = getAllToolNames();
     const enabled = req.body?.enabled;
@@ -287,6 +328,46 @@ async function setupSSE(toolsRef) {
 
   app.get("/api/settings/tools", (_req, res) => {
     res.json(getServerMetadata(toolsRef.current, undefined, getEnabledSetSSE()));
+  });
+
+  app.get("/api/settings/transport", (_req, res) => {
+    res.json({
+      mode: transportSettings.getTransportMode(),
+      availableModes: transportSettings.getAvailableModes(),
+    });
+  });
+
+  app.patch("/api/settings/transport", (req, res) => {
+    const mode = req.body?.mode;
+    const availableModes = transportSettings.getAvailableModes();
+    if (typeof mode !== "string" || !availableModes.includes(mode)) {
+      return res.status(400).json({
+        error: "Invalid or missing 'mode'.",
+        availableModes,
+      });
+    }
+    try {
+      transportSettings.setTransportMode(mode);
+      return res.json({
+        mode: transportSettings.getTransportMode(),
+        availableModes,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        error: err && err.message ? err.message : "Failed to update transport mode",
+      });
+    }
+  });
+
+  app.post("/api/settings/transport/apply", (_req, res) => {
+    const mode = transportSettings.getTransportMode();
+    res.json({
+      status: "restarting",
+      mode,
+    });
+    setTimeout(() => {
+      process.exit(0);
+    }, 100);
   });
 
   app.patch("/api/settings/tools", (req, res) => {
@@ -455,13 +536,34 @@ async function run() {
     process.exit(1);
   }
 
+  let cliMode = null;
+  if (isStreamableHttp) cliMode = "streamable-http";
+  else if (isSSE) cliMode = "sse";
+
+  const configuredMode = transportSettings.getTransportMode();
+  const mode = cliMode || configuredMode;
+
+  const availableModes = transportSettings.getAvailableModes();
+  if (!availableModes.includes(mode)) {
+    console.error(
+      `Error: Invalid transport mode '${mode}'. Expected one of: ${availableModes.join(
+        ", "
+      )}`
+    );
+    process.exit(1);
+  }
+
+  originalConsoleLog(
+    `[MCP Server] Using transport mode: ${mode} (cliOverride=${cliMode ? "yes" : "no"})`
+  );
+
   const toolsRef = { current: tools };
 
-  if (isStreamableHttp) {
+  if (mode === "streamable-http") {
     await setupStreamableHttp(toolsRef);
-  } else if (isSSE) {
+  } else if (mode === "sse") {
     await setupSSE(toolsRef);
-  } else {
+  } else if (mode === "stdio") {
     await setupStdio(tools);
   }
 }

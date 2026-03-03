@@ -25,6 +25,8 @@ interface ServerMeta {
   publicUrl: string
   toolGroups: ToolGroupMeta[]
   tools: ToolMeta[]
+  transportMode?: string
+  availableTransports?: string[]
 }
 
 function ToolGroup({
@@ -165,9 +167,22 @@ export default function ManualInfo() {
             <p className="manual__section-intro">
               Use this server from different MCP-compatible clients. The examples below assume this server is reachable at the public URL shown above.
             </p>
+            <p className="manual__section-intro">
+              Current active transport mode:{' '}
+              <span className="manual__pill">
+                {meta.transportMode === 'sse'
+                  ? 'Server-Sent Events (SSE)'
+                  : meta.transportMode === 'stdio'
+                    ? 'Stdio (CLI / desktop)'
+                    : 'HTTP (streamable)'}
+              </span>. You can change this on the Settings page; applying a new mode may restart the server.
+            </p>
             <div className="manual__connection-grid">
               <article className="manual__connection-card">
                 <h3 className="manual__connection-title">ChatGPT (SSE)</h3>
+                {meta.transportMode === 'sse' && (
+                  <span className="manual__connection-pill">Active mode</span>
+                )}
                 <p className="manual__connection-text">
                   Run the server in SSE mode:
                 </p>
@@ -187,6 +202,9 @@ export default function ManualInfo() {
 
               <article className="manual__connection-card">
                 <h3 className="manual__connection-title">HTTP-based MCP clients</h3>
+                {(!meta.transportMode || meta.transportMode === 'streamable-http') && (
+                  <span className="manual__connection-pill">Active mode</span>
+                )}
                 <p className="manual__connection-text">
                   Run the server in Streamable HTTP mode:
                 </p>
@@ -203,6 +221,9 @@ export default function ManualInfo() {
 
               <article className="manual__connection-card">
                 <h3 className="manual__connection-title">Stdio (Claude Desktop / Cursor)</h3>
+                {meta.transportMode === 'stdio' && (
+                  <span className="manual__connection-pill">Active mode</span>
+                )}
                 <p className="manual__connection-text">
                   Run the server without flags to use stdio:
                 </p>

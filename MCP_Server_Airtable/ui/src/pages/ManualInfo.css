@@ -127,6 +127,19 @@
   line-height: 1.5;
 }
 
+.manual__pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(99, 102, 241, 0.2);
+  color: #c7d2fe;
+}
+
 /* Collapsible groups */
 .manual__groups {
   display: flex;
@@ -222,6 +235,63 @@
   background: rgba(26, 26, 38, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
+}
+
+.manual__connection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.manual__connection-card {
+  background: rgba(26, 26, 38, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1.1rem 1.1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.manual__connection-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #f4f4f5;
+  margin-bottom: 0.25rem;
+}
+
+.manual__connection-pill {
+  align-self: flex-start;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(99, 102, 241, 0.25);
+  color: #c7d2fe;
+  margin-bottom: 0.3rem;
+}
+
+.manual__connection-text {
+  font-size: 0.875rem;
+  color: #d4d4d8;
+}
+
+.manual__connection-note {
+  font-size: 0.8125rem;
+  color: #a1a1aa;
+}
+
+.manual__code-block {
+  margin: 0.3rem 0 0.4rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  font-family: ui-monospace, 'Cascadia Code', 'SF Mono', monospace;
+  font-size: 0.8rem;
+  color: #e4e4e7;
+  overflow-x: auto;
 }
 
 .manual__url-code {

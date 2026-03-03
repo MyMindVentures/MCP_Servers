@@ -25,6 +25,8 @@ interface SettingsMeta {
   publicUrl: string
   toolGroups: ToolGroupItem[]
   tools: ToolItem[]
+  transportMode?: string
+  availableTransports?: string[]
 }
 
 function SettingsGroup({
@@ -86,6 +88,8 @@ export default function Settings() {
   const [enabledIds, setEnabledIds] = useState<Set<string>>(new Set())
   const [refreshing, setRefreshing] = useState(false)
   const [refreshMessage, setRefreshMessage] = useState<string | null>(null)
+  const [transportMode, setTransportMode] = useState<string | null>(null)
+  const [restarting, setRestarting] = useState(false)
 
   useEffect(() => {
     const headers: HeadersInit = {}
@@ -96,6 +100,11 @@ export default function Settings() {
       .then((data) => {
         setMeta(data)
         setEnabledIds(new Set(data.tools.filter((t: ToolItem) => t.enabled).map((t: ToolItem) => t.id)))
+        if (data.transportMode) {
+          setTransportMode(data.transportMode)
+        } else {
+          setTransportMode('streamable-http')
+        }
       })
       .catch((e) => setError(e.message))
   }, [getAuthHeader])
@@ -156,12 +165,47 @@ export default function Settings() {
         const err = await res.json().catch(() => ({}))
         throw new Error(err.error || res.statusText)
       }
+      if (transportMode) {
+        const resTransport = await fetch('/api/settings/transport', {
+          method: 'PATCH',
+          headers,
+          body: JSON.stringify({ mode: transportMode }),
+        })
+        if (!resTransport.ok) {
+          const errTransport = await resTransport.json().catch(() => ({}))
+          throw new Error(errTransport.error || resTransport.statusText)
+        }
+      }
       setSaveSuccess(true)
       setTimeout(() => setSaveSuccess(false), 3000)
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Failed to save')
     } finally {
       setSaving(false)
+    }
+  }
+
+  async function applyAndRestart() {
+    setRestarting(true)
+    setSaveSuccess(false)
+    const headers: HeadersInit = { 'Content-Type': 'application/json' }
+    const auth = getAuthHeader()
+    if (auth) headers['Authorization'] = auth
+    try {
+      const res = await fetch('/api/settings/transport/apply', {
+        method: 'POST',
+        headers,
+      })
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}))
+        throw new Error(err.error || res.statusText)
+      }
+      setSaveSuccess(true)
+      setTimeout(() => setSaveSuccess(false), 3000)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Failed to restart server')
+    } finally {
+      setRestarting(false)
     }
   }
 
@@ -206,6 +250,60 @@ export default function Settings() {
           <h1 className="settings__title">Toolinstellingen</h1>
           <p className="settings__description">Schakel per groep in welke tools beschikbaar zijn voor MCP-clients. Uitgeschakelde tools verschijnen niet in de toollijst en kunnen niet worden aangeroepen.</p>
 
+          <section className="settings__section">
+            <h2 className="settings__section-title">Transportmodus</h2>
+            <p className="settings__section-help">
+              Kies welk MCP-transport deze server gebruikt. Voor gehoste omgevingen zoals Railway is HTTP (streamable) meestal de beste keuze.
+            </p>
+            <div className="settings__transport-options">
+              {(meta.availableTransports ?? ['streamable-http', 'sse', 'stdio']).map((mode) => {
+                const isActive = transportMode === mode
+                let label = mode
+                let hint = ''
+                let description = ''
+                if (mode === 'streamable-http') {
+                  label = 'HTTP (streamable)'
+                  hint = 'Aanbevolen voor gehoste servers'
+                  description = 'Exporteert een /mcp HTTP-endpoint voor JSON-RPC 2.0-aanroepen.'
+                } else if (mode === 'sse') {
+                  label = 'Server-Sent Events (SSE)'
+                  hint = 'Voor ChatGPT URL-MCP-clients'
+                  description = 'Biedt een /sse-stream en /messages-endpoint voor SSE-gebaseerde MCP-clients.'
+                } else if (mode === 'stdio') {
+                  label = 'Stdio (CLI / desktop)'
+                  hint = 'Voor lokale MCP-clients zoals Claude Desktop of Cursor'
+                  description = 'Gebruikt stdin/stdout als transport. UI en HTTP-endpoints zijn niet beschikbaar in deze modus.'
+                }
+                return (
+                  <label
+                    key={mode}
+                    className={`settings__transport-option${isActive ? ' settings__transport-option--active' : ''}`}
+                  >
+                    <input
+                      type="radio"
+                      className="settings__transport-input"
+                      name="transport-mode"
+                      value={mode}
+                      checked={isActive}
+                      onChange={() => setTransportMode(mode)}
+                    />
+                    <div className="settings__transport-body">
+                      <div className="settings__transport-header">
+                        <span className="settings__transport-label">{label}</span>
+                        {isActive && <span className="settings__transport-pill">Actieve modus</span>}
+                      </div>
+                      {hint && <span className="settings__transport-hint">{hint}</span>}
+                      {description && <p className="settings__transport-desc">{description}</p>}
+                    </div>
+                  </label>
+                )
+              })}
+            </div>
+            <p className="settings__section-note">
+              De gekozen transportmodus wordt bewaard in de serverinstellingen. Gebruik &quot;Transport toepassen &amp; server herstarten&quot; om de nieuwe modus direct actief te maken.
+            </p>
+          </section>
+
           <div className="settings__actions">
             <button
               type="button"
@@ -220,6 +318,14 @@ export default function Settings() {
             <button type="button" className="settings__btn settings__btn--secondary" onClick={selectNone}>Alles uitschakelen</button>
             <button type="button" className="settings__btn settings__btn--primary" onClick={save} disabled={saving}>
               {saving ? 'Opslaan…' : 'Wijzigingen opslaan'}
+            </button>
+            <button
+              type="button"
+              className="settings__btn settings__btn--secondary"
+              onClick={applyAndRestart}
+              disabled={restarting}
+            >
+              {restarting ? 'Bezig met herstarten…' : 'Transport toepassen & server herstarten'}
             </button>
           </div>
           {saveSuccess && <p className="settings__success" role="status">Instellingen opgeslagen.</p>}

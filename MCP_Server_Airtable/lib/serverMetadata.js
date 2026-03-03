@@ -1,3 +1,5 @@
+import * as transportSettings from './transportSettings.js';
+
 /**
  * Centralized server metadata for the docs UI and /meta endpoint.
  * Builds from discovered tools so the manual stays in sync.
@@ -13,10 +15,12 @@ const PLATFORM_DESCRIPTION =
  * @param {Array<{ definition?: { function?: { name: string; description?: string } } }>} tools - From discoverTools()
  * @param {string} [publicUrl] - Public URL for MCP clients (defaults to env or placeholder)
  * @param {Set<string>} [enabledToolNames] - If provided, each tool gets enabled: true/false
- * @returns {{ name: string, description: string, publicUrl: string, toolGroups: Array<{ id: string, title: string, description: string, tools: Array }>, tools: Array<{ id: string, name: string, title: string, shortDescription: string, group: string, enabled?: boolean }> }}
+ * @returns {{ name: string, description: string, publicUrl: string, transportMode: string, availableTransports: string[], toolGroups: Array<{ id: string, title: string, description: string, tools: Array }>, tools: Array<{ id: string, name: string, title: string, shortDescription: string, group: string, enabled?: boolean }> }}
  */
 export function getServerMetadata(tools, publicUrl, enabledToolNames) {
   const baseUrl = publicUrl || process.env.MCP_PUBLIC_URL || 'http://127.0.0.1:3001/mcp';
+  const transportMode = transportSettings.getTransportMode();
+  const availableTransports = transportSettings.getAvailableModes();
   const toolList = (tools || [])
     .map((tool) => {
       const fn = tool.definition?.function;
@@ -52,6 +56,8 @@ export function getServerMetadata(tools, publicUrl, enabledToolNames) {
     name: PLATFORM_NAME,
     description: PLATFORM_DESCRIPTION,
     publicUrl: baseUrl,
+    transportMode,
+    availableTransports,
     toolGroups,
     tools: toolList,
   };
