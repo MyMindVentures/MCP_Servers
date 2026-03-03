@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        server: [notion, outlook, raindrop, clickup, gammaai, 1password, github, airtable, airtable-lite, template]
+        server: [notion, outlook, raindrop, clickup, gammaai, 1password, github, airtable]
 
     permissions:
       contents: read
@@ -40,8 +40,6 @@ jobs:
             1password) DIR="MCP_Server_1Password" ;;
             github)   DIR="MCP_Server_GitHub" ;;
             airtable) DIR="MCP_Server_Airtable" ;;
-            airtable-lite) DIR="MCP_Server_Template_Lightweight_AirtableExample" ;;
-            template) DIR="MCP_Server_Template" ;;
             *) echo "Unknown server"; exit 1 ;;
           esac
           echo "directory=${DIR}" >> $GITHUB_OUTPUT
