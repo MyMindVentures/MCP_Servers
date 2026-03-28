@@ -22,7 +22,7 @@
     "fastify": "^5.0.0",
     "fastify-plugin": "^5.0.0",
     "prom-client": "^15.0.0",
-    "yaml": "^2.6.0",
+    "yaml": "^2.8.3",
     "zod": "^3.23.8",
     "@apidevtools/swagger-parser": "^10.0.3",
     "undici": "^6.19.8",
